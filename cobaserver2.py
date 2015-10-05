@@ -49,18 +49,17 @@ def chat_server():
                         # there is something in the socket
 			data2 =sock.recv(6)
 			#print "dapet : ",data2
-#			b='kirim '
-#			c='broad '
 			if data2 =='login ' :
 			  username.append(sock.recv(6))
 			 # print "Username" ,username.pop()
 			if data2 =='kirim ' :
 			  data3=sock.recv(6)
-			  print"index ", username.index(data3)
+			 # print"index ", username.index(data3)
 			  #print "oke"
-			  tujuan=SOCKET_LIST[username.index(data3)]
+			  tujuan=aye[username.index(data3)]
+			  #print tujuan
 			  data4=sock.recv(RECV_BUFFER)
-			  print data4
+			  #print data4
 			  sock.sendto(data4,tujuan)
 			  print tujuan
 
@@ -70,7 +69,11 @@ def chat_server():
 			      sock.send(username[index])
 			    # print username[index]
                  	if data2 =='broad ' :
-		         broadcast(server_socket, sock, "\r" + 'Your Friend ['+ str(sock.getpeername()) +  ' ]' + data)  
+			 data4=sock.recv(RECV_BUFFER)
+			 aza=aye.index(sock.getpeername())
+			 print aza
+			 #print aye.index(aza)
+		         broadcast(server_socket, sock,"\r" + '['+ str(username[aza]) +'] ' + data4)  
                     #else:
                         # remove the socket that's broken    
                      #   if sock in SOCKET_LIST:
