@@ -95,7 +95,7 @@ def broadcast (server_socket, sock, message):
         # send the message only to peer
         if socket != server_socket and socket != sock :
             try :
-                socket.send(message)
+                socket.sendall(message)
             except :
                 # broken socket connection
                 socket.close()
