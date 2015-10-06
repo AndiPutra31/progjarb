@@ -8,6 +8,7 @@ RECV_BUFFER = 4096
 PORT = 9009
 aye = []
 username = []
+list=[]
 index=0
 def chat_server():
 
@@ -48,25 +49,29 @@ def chat_server():
                     #if data:
                         # there is something in the socket
 			data2 =sock.recv(6)
+			
 			#print "dapet : ",data2
 			if data2 =='login ' :
 			  username.append(sock.recv(6))
+			  list.append(sock)
 			 # print "Username" ,username.pop()
 			if data2 =='kirim ' :
 			  data3=sock.recv(6)
-			 # print"index ", username.index(data3)
+			  #print"index ", username.index(data3)
 			  #print "oke"
-			  tujuan=aye[username.index(data3)]
+			  tujuan=list[username.index(data3)]
 			  #print tujuan
 			  data4=sock.recv(RECV_BUFFER)
 			  #print data4
-			  sock.sendto(data4,tujuan)
-			  print tujuan
+  			  aza=aye.index(sock.getpeername())
+			  #print tujuan
+  		          tujuan.send("\r" + '['+ str(username[aza]) +'] ' + data4) 
+			  #print tujuan
 
 			if data2 =='daftar' :
 			  for index in range(len(username)) :
-			      sock.send("\n")
 			      sock.send(username[index])
+			      sock.send("\n")
 			    # print username[index]
                  	if data2 =='broad ' :
 			 data4=sock.recv(RECV_BUFFER)
