@@ -2,16 +2,10 @@ import sys
 import socket
 import select
  
-#def chat_client():
- #   if(len(sys.argv) < 3) :
-  #      print 'Usage : python chat_client.py hostname port'
-   #     sys.exit()
-
+def chat_client():
     host = 'localhost'
     port = 9009
-    #host = sys.argv[1]
-    #port = int(sys.argv[2])
-     
+        
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(2)
      
@@ -22,8 +16,13 @@ import select
         print 'Unable to connect'
         sys.exit()
      
-    print 'Connected...'
-    sys.stdout.write('[Me] '); sys.stdout.flush()
+    print 'Connected to remote host. You can start sending messages\n'
+    print 'Command :\n'
+    print '1. login\n'
+    print '2. kirim -> untuk sendto\n'
+    print '3. broad -> untuk broadcast\n'
+    print '4. list\n'
+    sys.stdout.write('[Me] : '); sys.stdout.flush()
      
     while 1:
         socket_list = [sys.stdin, s]
@@ -39,15 +38,15 @@ import select
                     print '\nDisconnected from chat server'
                     sys.exit()
                 else :
-                    #print data
-                    sys.stdout.write(data)
-                    sys.stdout.write('[Me] '); sys.stdout.flush()     
-            
+                  #print data
+                  sys.stdout.write(data)
+ 		               sys.stdout.write('[Me] : '); sys.stdout.flush()
+             	  
             else :
                 # user entered a message
                 msg = sys.stdin.readline()
                 s.send(msg)
-                sys.stdout.write('[Me] '); sys.stdout.flush() 
+                sys.stdout.write('[Me] : '); sys.stdout.flush() 
 
 if __name__ == "__main__":
 
