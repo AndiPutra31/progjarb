@@ -10,6 +10,7 @@ aye = []
 username = []
 list=[]
 index=0
+
 def chat_server():
 
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -32,13 +33,8 @@ def chat_server():
             # a new connection request recieved
             if sock == server_socket: 
                 sockfd, addr = server_socket.accept()
-                SOCKET_LIST.append(sockfd)
+		SOCKET_LIST.append(sockfd)
 		aye.append(addr)
-		#print"List :",aye[]
-                print "Client (%s, %s) connected" % addr
-#		print "Isi : ",sockfd
-                 
-#               broadcast(server_socket, sockfd, "[%s:%s] entered our chatting room\n" % addr)
              
             # a message from a client, not a new connection
             else:
@@ -50,34 +46,36 @@ def chat_server():
                         # there is something in the socket
 			data2 =sock.recv(6)
 			
-			#print "dapet : ",data2
 			if data2 =='login ' :
-			  username.append(sock.recv(6))
-			  list.append(sock)
-			 # print "Username" ,username.pop()
+				data1 =sock.recv(6)
+#				a=sock.getpeername()
+			  	if username.count(data1) == 0 :
+					username.append(data1)
+			  		list.append(sock)
+					user=username[aye.index(addr)]
+	                  		broadcast(server_socket, sockfd, "["+user+"] entered our chatting room\n")
+					sock.send("Login Successfull\n")
+				else :
+					sock.send("username already exist\n")
+				
 			if data2 =='kirim ' :
 			  data3=sock.recv(6)
-			  #print"index ", username.index(data3)
-			  #print "oke"
-			  tujuan=list[username.index(data3)]
-			  #print tujuan
-			  data4=sock.recv(RECV_BUFFER)
-			  #print data4
-  			  aza=aye.index(sock.getpeername())
-			  #print tujuan
-  		          tujuan.send("\r" + '['+ str(username[aza]) +'] ' + data4) 
-			  #print tujuan
+			  if username.count(data3) == 0 :
+			  	sock.send("Unknown user , please check at command 'list'\n")
+			  else :  
+				tujuan=list[username.index(data3)]
+				data4=sock.recv(RECV_BUFFER)
+  			  	aza=aye.index(sock.getpeername())
+  		          	tujuan.send("\r" + '['+ str(username[aza]) +'] : ' + data4) 
 
-			if data2 =='daftar' :
+			if data2 =='list\n' :
+			  sock.send("\rList User :\n")
 			  for index in range(len(username)) :
-			      sock.send(username[index])
-			      sock.send("\n")
-			    # print username[index]
+			      sock.send("\r"+username[index]+ "\n")
+			      #sock.send("\n")
                  	if data2 =='broad ' :
 			 data4=sock.recv(RECV_BUFFER)
 			 aza=aye.index(sock.getpeername())
-			 print aza
-			 #print aye.index(aza)
 		         broadcast(server_socket, sock,"\r" + '['+ str(username[aza]) +'] ' + data4)  
                     #else:
                         # remove the socket that's broken    
@@ -111,3 +109,4 @@ def broadcast (server_socket, sock, message):
 if __name__ == "__main__":
 
     sys.exit(chat_server())       
+
