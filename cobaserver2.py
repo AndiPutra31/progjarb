@@ -87,7 +87,8 @@ def chat_server():
 
                 # exception 
                 except:
-                    broadcast(server_socket, sock, "Client (%s, %s) is offline\n" % addr)
+                    v=aye.index(sock.getpeername())
+                    broadcast(server_socket, sock, "Client ["+username[v]+"] is offline\n")
                     continue
 
     server_socket.close()
