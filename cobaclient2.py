@@ -22,6 +22,7 @@ def chat_client():
     print '2. kirim -> untuk sendto\n'
     print '3. broad -> untuk broadcast\n'
     print '4. list\n'
+    print '5. logout\n'
     sys.stdout.write('[Me] : '); sys.stdout.flush()
      
     while 1:
@@ -40,7 +41,7 @@ def chat_client():
                 else :
                   #print data
                   sys.stdout.write(data)
- 		               sys.stdout.write('[Me] : '); sys.stdout.flush()
+ 		  sys.stdout.write('[Me] : '); sys.stdout.flush()
              	  
             else :
                 # user entered a message
